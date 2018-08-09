@@ -24,5 +24,6 @@ public class TwittReader {
     }
     public void subscribe(){
         client.createSubscription(configManager.getProperty(PropertyType.TWITTER_CHANNEL), SubscriptionMode.SIMPLE ,twitterSubscriber);
+        client.start();
     }
 }
