@@ -15,13 +15,13 @@ public class KafkaTwitterProducer {
     public KafkaTwitterProducer() {
         configManager = ConfigManager.getInstance();
         Properties properties = new Properties();
-        properties.put("bootstrap.servers", PropertyType.KAFKA_BOOTSTRAP);
-        properties.put("key.serializer",PropertyType.KAFKA_KEY_SERIALIZER);
-        properties.put("value.serializer",PropertyType.KAFKA_VALUE_SERIALIZER);
+        properties.put("bootstrap.servers", configManager.getProperty(PropertyType.KAFKA_BOOTSTRAP));
+        properties.put("key.serializer",configManager.getProperty(PropertyType.KAFKA_KEY_SERIALIZER));
+        properties.put("value.serializer",configManager.getProperty(PropertyType.KAFKA_VALUE_SERIALIZER));
         producer = new KafkaProducer<>(properties);
     }
 
     public void pushTwitt(JsonNode jsonNode) {
-        producer.send(new ProducerRecord<>(PropertyType.KAFKA_TOPIC.toString(),jsonNode.get("id").asInt(),jsonNode));
+        producer.send(new ProducerRecord<>(configManager.getProperty(PropertyType.KAFKA_TOPIC),jsonNode.get("id").asInt(),jsonNode));
     }
 }
