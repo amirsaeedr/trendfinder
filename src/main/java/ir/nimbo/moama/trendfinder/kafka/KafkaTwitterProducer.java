@@ -11,19 +11,18 @@ import java.util.Properties;
 
 public class KafkaTwitterProducer {
     private ConfigManager configManager;
-    private Producer<Integer, JsonNode> producer;
+    private Producer<Integer, String> producer;
+
     public KafkaTwitterProducer() {
         configManager = ConfigManager.getInstance();
         Properties properties = new Properties();
         properties.put("bootstrap.servers", configManager.getProperty(PropertyType.KAFKA_BOOTSTRAP));
-        properties.put("key.serializer",configManager.getProperty(PropertyType.KAFKA_KEY_SERIALIZER));
-        properties.put("value.serializer",configManager.getProperty(PropertyType.KAFKA_VALUE_SERIALIZER));
+        properties.put("key.serializer", configManager.getProperty(PropertyType.KAFKA_KEY_SERIALIZER));
+        properties.put("value.serializer", configManager.getProperty(PropertyType.KAFKA_VALUE_SERIALIZER));
         producer = new KafkaProducer<>(properties);
     }
 
     public void pushTweet(JsonNode jsonNode) {
-        producer.send(new ProducerRecord<>(configManager.getProperty(PropertyType.KAFKA_TOPIC),jsonNode.get("id").asInt(),jsonNode));
-        producer.flush();
-        System.out.println("produce");
+        producer.send(new ProducerRecord<>(configManager.getProperty(PropertyType.KAFKA_TOPIC), jsonNode.get("id").asInt(), jsonNode.toString()));
     }
 }

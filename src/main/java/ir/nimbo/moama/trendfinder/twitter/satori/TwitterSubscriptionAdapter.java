@@ -85,8 +85,9 @@ public class TwitterSubscriptionAdapter extends SubscriptionAdapter {
             } catch (IOException e) {
 
             }
-            if (jsonNode.get("lang").asText().equals("en"))
+            if (jsonNode.get("lang").asText().equals("en")) {
                 kafkaProducer.pushTweet(jsonNode);
+            }
         }
     }
 
