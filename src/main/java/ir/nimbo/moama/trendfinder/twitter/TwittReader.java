@@ -2,6 +2,7 @@ package ir.nimbo.moama.trendfinder.twitter;
 
 import com.satori.rtm.*;
 import ir.nimbo.moama.trendfinder.twitter.satori.TwitterClientAdapter;
+import ir.nimbo.moama.trendfinder.twitter.satori.TwitterSubscriptionAdapter;
 import ir.nimbo.moama.trendfinder.util.ConfigManager;
 import ir.nimbo.moama.trendfinder.util.PropertyType;
 
@@ -15,7 +16,7 @@ public class TwittReader {
         channel = configManager.getProperty(PropertyType.TWITTER_CHANNEL);
         String endPoint = configManager.getProperty(PropertyType.TWITTER_END_POINT);
         RtmClientAdapter twitterAdapter = new TwitterClientAdapter();
-        twitterSubscriber = new SubscriptionAdapter();
+        twitterSubscriber = new TwitterSubscriptionAdapter();
         client = new RtmClientBuilder(endPoint, appKey).setListener(twitterAdapter).build();
     }
     public void subscribe(){
