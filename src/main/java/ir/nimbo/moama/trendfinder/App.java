@@ -35,7 +35,17 @@ public class App {
         SubscriptionAdapter listener = new SubscriptionAdapter() {
             @Override
             public void onSubscriptionData(SubscriptionData data) {
-
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode jsonNode = null;
+                for (AnyJson json : data.getMessages()) {
+                    try {
+                        jsonNode = mapper.readTree(json.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (jsonNode.get("lang").asText().equals("en"))
+                        System.out.println("Got message: " + jsonNode.get("id").asText());
+                }
             }
         };
 
