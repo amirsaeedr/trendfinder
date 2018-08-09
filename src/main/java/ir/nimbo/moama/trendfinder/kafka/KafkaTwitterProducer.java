@@ -21,7 +21,7 @@ public class KafkaTwitterProducer {
         producer = new KafkaProducer<>(properties);
     }
 
-    public void pushTwitt(JsonNode jsonNode) {
+    public void pushTweet(JsonNode jsonNode) {
         producer.send(new ProducerRecord<>(configManager.getProperty(PropertyType.KAFKA_TOPIC),jsonNode.get("id").asInt(),jsonNode));
     }
 }
